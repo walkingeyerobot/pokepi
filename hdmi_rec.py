@@ -6,7 +6,7 @@ from subprocess import Popen
 
 print('starting hdmi_rec.py')
 
-record_video_cmd1 = 'strace -econnect ffmpeg -f pulse -ac 2 -i default -f v4l2 -framerate 30 -video_size 640x480 -i /dev/video0 -vcodec libx264 -preset ultrafast'.split(' ')
+record_video_cmd1 = 'ffmpeg -f pulse -ac 2 -i default -f v4l2 -framerate 30 -video_size 640x480 -i /dev/video0 -vcodec libx264 -preset ultrafast'.split(' ')
 record_video_cmd2 = '-r 60 -update true /mnt/tmpfs/lastframe.png -y'.split(' ')
 watch_video_cmd = 'ffmpeg -i /dev/video0 -r 60 -s 640x480 -update true /mnt/tmpfs/lastframe.png -y'.split(' ')
 
