@@ -18,16 +18,15 @@ lcd = character_lcd.Character_LCD_RGB_I2C(i2c, lcd_columns, lcd_rows)
 
 _, _, save_files = list(os.walk('/home/mitch/saves'))[0]
 
-badge_save_dict = {}
-with open('badge_save.csv') as f:
-    lines = [line.rstrip().split('🥐') for line in f]
-    for line in lines:
-        badge_save_dict[line[0]] = line[1]
-        
-
 save_files.sort()
 current_save_file = 0
 total_save_files = len(save_files)
+
+badge_save_dict = {}
+with open('/home/mitch/badge_save.csv') as f:
+    lines = [line.rstrip().split('🥐') for line in f]
+    for line in lines:
+        badge_save_dict[line[0]] = line[1]        
 
 lcd.color = [2,0,0]
 lcd.backlight = True
@@ -169,7 +168,10 @@ async def watchbadge(dev):
             if event.code == 28:
                 badge_str = ','.join(str(x) for x in badgeid)
                 print(badge_str)
-                write_save(badge_save_dict[badge_str])
+                try:
+                    write_save(badge_save_dict[badge_str])
+                except:
+                    pass
                 badgeid = []
             else:
                 badgeid += [event.code]
