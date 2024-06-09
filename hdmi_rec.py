@@ -18,6 +18,10 @@ recording = False
 ffmpeg_process = Popen(watch_video_cmd)
 inactive_count = 0
 
+save_path = '/home/mitch/Videos/'
+if os.path.exists('/media/mitch/USB DISK/ok.txt'):
+    save_path = '/media/mitch/USB DISK/'
+
 def isActive():
     try:
         lastframe = cv2.cvtColor(cv2.imread('/mnt/tmpfs/lastframe.png'), cv2.COLOR_BGR2GRAY)
@@ -61,7 +65,7 @@ def mainLoop():
         if ffmpeg_process:
             ffmpeg_process.terminate()
             ffmpeg_process.wait()
-        ffmpeg_process = Popen(record_video_cmd1 + ['/home/mitch/Videos/' + time.strftime("%Y%m%d-%H%M%S") + '.mp4'] + record_video_cmd2)
+        ffmpeg_process = Popen(record_video_cmd1 + [save_path + time.strftime("%Y%m%d-%H%M%S") + '.mp4'] + record_video_cmd2)
         recording = True
     elif recording and inactive_count == 0:
         print('recording and active')

@@ -23,7 +23,10 @@ current_save_file = 0
 total_save_files = len(save_files)
 
 badge_save_dict = {}
-with open('/home/mitch/badge_save.csv') as f:
+badge_save_csv = '/home/mitch/badge_save.csv'
+if os.path.exists('/media/mitch/USB DISK/badge_save.csv'):
+    badge_save_csv = '/media/mitch/USB DISK/badge_save.csv'
+with open(badge_save_csv) as f:
     lines = [line.rstrip().split('🥐') for line in f]
     for line in lines:
         badge_save_dict[line[0]] = line[1]        
